@@ -54,7 +54,7 @@ class Spiller2(Spillobjekt):
         if keys[pygame.K_RIGHT]:
             self.x += self.fart
         if keys[pygame.K_UP]:
-            self.y -= self.fart
+            self.y -= 10
         if keys[pygame.K_DOWN]:
             self.y += self.fart
 
@@ -79,6 +79,9 @@ while running:
     """
     Her skal vi putte spillets logikk, som å tegne figurer og oppdatere posisjonen deres.
     """
+    
+    spiller1.y += 2
+    spiller2.y += 2
 
     spiller1.tegn()
     spiller1.oppdater()
