@@ -29,11 +29,13 @@ class Plattform(Spillobjekt):
         pygame.draw.rect(screen, self.color, self.rect)
 
 class Spiller1(Spillobjekt):
-    def __init__(self, start_x, start_y):
+    def __init__(self, start_x, start_y, start_vx, start_vy):
         super().__init__(start_x, start_y)
         self.fart = 5
         self.size = 5
         self.color = "red"
+        self.vx = start_vx
+        self.vy = start_vy
     
     def tegn(self):
         pygame.draw.rect(screen, self.color, self.rect)
@@ -49,6 +51,11 @@ class Spiller1(Spillobjekt):
             self.y -= self.fart
         if keys[pygame.K_s]:
             self.y += self.fart
+        
+        # Kollisjon
+        if pygame.Rect.colliderect(spiller1.rect, plattform.rect):      
+            if self.vy >= 0:
+                self.vy *= 0
 
 class Spiller2(Spillobjekt):
     def __init__(self, start_x, start_y):
