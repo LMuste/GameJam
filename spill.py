@@ -1,4 +1,5 @@
 import pygame
+import random as rnd
 
 pygame.init()
 
@@ -26,6 +27,20 @@ class Plattform(Spillobjekt):
 
     def tegn(self):
         self.rect = pygame.Rect((self.x - self.size, self.y - self.size), (self.size*screen.get_width(), self.size*3))
+        pygame.draw.rect(screen, self.color, self.rect)
+
+class Blokk(Spillobjekt):
+    def __init__(self, start_x, start_y):
+        super().__init__(start_x, start_y)
+        self.size = 5
+        self.color = "gray"
+        self.bredde = 50
+        self.høyde = 100
+        self.x = start_x
+        self.y = start_y
+
+    def tegn(self):
+        self.rect = pygame.Rect((self.x, self.y), (self.size*10, self.size*3))
         pygame.draw.rect(screen, self.color, self.rect)
 
 class Spiller1(Spillobjekt):
@@ -80,7 +95,7 @@ class Spiller2(Spillobjekt):
         if keys[pygame.K_RIGHT]:
             self.x += self.fart
         if keys[pygame.K_UP]:
-            self.y -= 10
+            self.y -= self.fart
 
         spiller2.y += spiller2.vy
         spiller2.vy += spiller2.a
@@ -98,6 +113,8 @@ spiller1 = Spiller1(screen.get_width()/2, screen.get_height()/2, 2, 2)
 spiller2 = Spiller2(screen.get_width()/2, screen.get_height()/2, 2, 2)
 
 plattform = Plattform(screen.get_width()/screen.get_width(), screen.get_height()-3)
+
+blokk = Blokk(rnd.randint(0, screen.get_width()), rnd.randint(0, screen.get_height()/2))
 
 running = True
 
@@ -125,6 +142,7 @@ while running:
 
     plattform.tegn()
 
+    blokk.tegn()
 
     # Oppdaterer hele skjermen
     pygame.display.flip()
