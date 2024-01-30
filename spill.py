@@ -69,10 +69,18 @@ class Spiller1(Spillobjekt):
         spiller1.y += spiller1.vy
         spiller1.vy += spiller1.a
 
+        # Kollisjon med platform
         if pygame.Rect.colliderect(spiller1.rect, plattform.rect):
             print("-----")
             if spiller1.vy > 0:
                 spiller1.vy = 0
+        
+        # Kollisjon med blokk
+        if pygame.Rect.colliderect(spiller1.rect, blokk.rect):
+            print("-----")
+            if spiller1.vy > 0:
+                spiller1.vy = 0
+        
 
 class Spiller2(Spillobjekt):
     def __init__(self, start_x, start_y, start_vx, start_vy):
@@ -100,7 +108,14 @@ class Spiller2(Spillobjekt):
         spiller2.y += spiller2.vy
         spiller2.vy += spiller2.a
 
+        # Kollisjon med plattform
         if pygame.Rect.colliderect(spiller2.rect, plattform.rect):
+            print("-----")
+            if spiller2.vy > 0:
+                spiller2.vy = 0
+
+        # Kollisjon med blokk
+        if pygame.Rect.colliderect(spiller2.rect, blokk.rect):
             print("-----")
             if spiller2.vy > 0:
                 spiller2.vy = 0
@@ -114,7 +129,7 @@ spiller2 = Spiller2(screen.get_width()/2, screen.get_height()/2, 2, 2)
 
 plattform = Plattform(screen.get_width()/screen.get_width(), screen.get_height()-3)
 
-blokk = Blokk(rnd.randint(0, screen.get_width()), rnd.randint(0, screen.get_height()/2))
+blokk = Blokk(rnd.randint(0, screen.get_width()), rnd.randint(round(70*screen.get_height()/100), round(95*screen.get_height()/100)))
 
 running = True
 
