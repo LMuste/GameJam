@@ -49,8 +49,6 @@ class Spiller1(Spillobjekt):
             self.x += self.fart
         if keys[pygame.K_w]:
             self.y -= self.fart
-        if keys[pygame.K_s]:
-            self.y += self.fart
         
         # Kollisjon
         if pygame.Rect.colliderect(spiller1.rect, plattform.rect):      
@@ -76,8 +74,6 @@ class Spiller2(Spillobjekt):
             self.x += self.fart
         if keys[pygame.K_UP]:
             self.y -= 10
-        if keys[pygame.K_DOWN]:
-            self.y += self.fart
 
 screen = pygame.display.set_mode((500, 500)) # Setter skjermen til 500x500 piksler.
 
