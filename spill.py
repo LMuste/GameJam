@@ -36,6 +36,7 @@ class Spiller1(Spillobjekt):
         self.color = "red"
         self.vx = start_vx
         self.vy = start_vy
+        self.a = 0.05
     
     def tegn(self):
         pygame.draw.rect(screen, self.color, self.rect)
@@ -49,18 +50,24 @@ class Spiller1(Spillobjekt):
             self.x += self.fart
         if keys[pygame.K_w]:
             self.y -= self.fart
-        
-        # Kollisjon
-        if pygame.Rect.colliderect(spiller1.rect, plattform.rect):      
-            if self.vy >= 0:
-                self.vy *= 0
+
+        spiller1.y += spiller1.vy
+        spiller1.vy += spiller1.a
+
+        if pygame.Rect.colliderect(spiller1.rect, plattform.rect):
+            print("-----")
+            if spiller1.vy > 0:
+                spiller1.vy = 0
 
 class Spiller2(Spillobjekt):
-    def __init__(self, start_x, start_y):
+    def __init__(self, start_x, start_y, start_vx, start_vy):
         super().__init__(start_x, start_y)
         self.fart = 5
         self.size = 5
         self.color = "blue"
+        self.vx = start_vx
+        self.vy = start_vy
+        self.a = 0.05
     
     def tegn(self):
         pygame.draw.rect(screen, self.color, self.rect)
@@ -75,12 +82,20 @@ class Spiller2(Spillobjekt):
         if keys[pygame.K_UP]:
             self.y -= 10
 
+        spiller2.y += spiller2.vy
+        spiller2.vy += spiller2.a
+
+        if pygame.Rect.colliderect(spiller2.rect, plattform.rect):
+            print("-----")
+            if spiller2.vy > 0:
+                spiller2.vy = 0
+
 screen = pygame.display.set_mode((500, 500)) # Setter skjermen til 500x500 piksler.
 
 clock = pygame.time.Clock()
 
-spiller1 = Spiller1(screen.get_width()/2, screen.get_height()/2)
-spiller2 = Spiller2(screen.get_width()/2, screen.get_height()/2)
+spiller1 = Spiller1(screen.get_width()/2, screen.get_height()/2, 2, 2)
+spiller2 = Spiller2(screen.get_width()/2, screen.get_height()/2, 2, 2)
 
 plattform = Plattform(screen.get_width()/screen.get_width(), screen.get_height()-3)
 
@@ -99,8 +114,8 @@ while running:
     Her skal vi putte spillets logikk, som å tegne figurer og oppdatere posisjonen deres.
     """
 
-    spiller1.y += 2
-    spiller2.y += 2
+    spiller1.y += spiller1.vy
+    spiller2.y += spiller2.vy
 
     spiller1.tegn()
     spiller1.oppdater()
@@ -109,6 +124,7 @@ while running:
     spiller2.oppdater()
 
     plattform.tegn()
+
 
     # Oppdaterer hele skjermen
     pygame.display.flip()
