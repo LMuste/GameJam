@@ -131,10 +131,9 @@ class Spiller2(Spillobjekt):
             print("-----")
             if spiller2.vy > 0:
                 spiller2.vy = 0
-#            if spiller2.vy < 0:
-#               self.hopp_tid = time.time()
-#              spiller2.vy *= -1
-            
+            if spiller2.vy < 0:
+             spiller2.vy *= -1
+                                      
             if keys[pygame.K_UP] and abs(time.time() - self.hopp_tid) > 0.1:
                 self.hopp_tid = time.time()
                 self.vy -= 2
@@ -151,6 +150,14 @@ spiller2 = Spiller2(screen.get_width()/2, screen.get_height()/2, 2, 2)
 plattform = Plattform(screen.get_width()/screen.get_width(), screen.get_height()-3)
 
 blokk = Blokk(rnd.randint(0, screen.get_width()), rnd.randint(round(80*screen.get_height()/100), round(90*screen.get_height()/100)))
+
+blokker = []
+
+for n in range(3):
+    start_x = rnd.randint(0, screen.get_width())
+    start_y = rnd.randint(round(80*screen.get_height()/100), round(90*screen.get_height()/100))
+    blokk = Blokk(start_x, start_y)
+    blokker.append(blokk)
 
 running = True
 
@@ -178,7 +185,8 @@ while running:
 
     plattform.tegn()
 
-    blokk.tegn()
+    for x in blokker:
+        x.tegn()
 
     # Oppdaterer hele skjermen
     pygame.display.flip()
