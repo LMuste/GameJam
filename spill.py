@@ -131,9 +131,15 @@ class Spiller2(Spillobjekt):
             print("-----")
             if spiller2.vy > 0:
                 spiller2.vy = 0
-            if keys[pygame.K_w] and abs(time.time() - self.hopp_tid) > 0.1:
+#            if spiller2.vy < 0:
+#               self.hopp_tid = time.time()
+#              spiller2.vy *= -1
+            
+            if keys[pygame.K_UP] and abs(time.time() - self.hopp_tid) > 0.1:
                 self.hopp_tid = time.time()
                 self.vy -= 2
+            
+                
 
 screen = pygame.display.set_mode((500, 500)) # Setter skjermen til 500x500 piksler.
 
@@ -144,7 +150,7 @@ spiller2 = Spiller2(screen.get_width()/2, screen.get_height()/2, 2, 2)
 
 plattform = Plattform(screen.get_width()/screen.get_width(), screen.get_height()-3)
 
-blokk = Blokk(rnd.randint(0, screen.get_width()), rnd.randint(round(70*screen.get_height()/100), round(95*screen.get_height()/100)))
+blokk = Blokk(rnd.randint(0, screen.get_width()), rnd.randint(round(80*screen.get_height()/100), round(90*screen.get_height()/100)))
 
 running = True
 
