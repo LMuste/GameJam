@@ -1,5 +1,6 @@
 import pygame
 import random as rnd
+import time
 
 pygame.init()
 
@@ -52,35 +53,44 @@ class Spiller1(Spillobjekt):
         self.vx = start_vx
         self.vy = start_vy
         self.a = 0.05
+        self.hopp_tid = 0
     
     def tegn(self):
         pygame.draw.rect(screen, self.color, self.rect)
         self.rect = pygame.Rect((self.x - self.size, self.y - self.size), (self.size * 3, self.size * 3))
 
     def oppdater(self):
+        print(self.vy)
         keys = pygame.key.get_pressed() 
         if keys[pygame.K_a]:
             self.x -= self.fart
         if keys[pygame.K_d]:
             self.x += self.fart
-        if keys[pygame.K_w]:
-            self.y -= self.fart
+        
 
         spiller1.y += spiller1.vy
         spiller1.vy += spiller1.a
 
         # Kollisjon med platform
+
         if pygame.Rect.colliderect(spiller1.rect, plattform.rect):
-            print("-----")
+            #print("-----")
             if spiller1.vy > 0:
                 spiller1.vy = 0
+            if keys[pygame.K_w] and abs(time.time() - self.hopp_tid) > 0.1:
+                self.hopp_tid = time.time()
+                self.vy -= 2
         
         # Kollisjon med blokk
         if pygame.Rect.colliderect(spiller1.rect, blokk.rect):
-            print("-----")
+            #print("-----")
             if spiller1.vy > 0:
                 spiller1.vy = 0
+            if keys[pygame.K_w] and abs(time.time() - self.hopp_tid) > 0.1:
+                self.hopp_tid = time.time()
+                self.vy -= 2
         
+
 
 class Spiller2(Spillobjekt):
     def __init__(self, start_x, start_y, start_vx, start_vy):
@@ -91,6 +101,7 @@ class Spiller2(Spillobjekt):
         self.vx = start_vx
         self.vy = start_vy
         self.a = 0.05
+        self.hopp_tid = 0
     
     def tegn(self):
         pygame.draw.rect(screen, self.color, self.rect)
@@ -102,8 +113,6 @@ class Spiller2(Spillobjekt):
             self.x -= self.fart
         if keys[pygame.K_RIGHT]:
             self.x += self.fart
-        if keys[pygame.K_UP]:
-            self.y -= self.fart
 
         spiller2.y += spiller2.vy
         spiller2.vy += spiller2.a
@@ -113,12 +122,18 @@ class Spiller2(Spillobjekt):
             print("-----")
             if spiller2.vy > 0:
                 spiller2.vy = 0
+            if keys[pygame.K_UP] and abs(time.time() - self.hopp_tid) > 0.1:
+                self.hopp_tid = time.time()
+                self.vy -= 2
 
         # Kollisjon med blokk
         if pygame.Rect.colliderect(spiller2.rect, blokk.rect):
             print("-----")
             if spiller2.vy > 0:
                 spiller2.vy = 0
+            if keys[pygame.K_w] and abs(time.time() - self.hopp_tid) > 0.1:
+                self.hopp_tid = time.time()
+                self.vy -= 2
 
 screen = pygame.display.set_mode((500, 500)) # Setter skjermen til 500x500 piksler.
 
