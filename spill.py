@@ -68,9 +68,10 @@ class Spiller1(Spillobjekt):
         if keys[pygame.K_d]:
             self.x += self.fart
         
-
         spiller1.y += spiller1.vy
         spiller1.vy += spiller1.a
+
+        
 
         # Kollisjon med plattform
         if pygame.Rect.colliderect(spiller1.heading, plattform.rect):
@@ -102,8 +103,6 @@ class Spiller1(Spillobjekt):
                     spiller1.x -= 20
                 if spiller1.vx < 0:     #mot venstre
                     spiller1.x += 20
-        
-
 
 class Spiller2(Spillobjekt):
     def __init__(self, start_x, start_y, start_vx, start_vy):
@@ -171,8 +170,8 @@ screen = pygame.display.set_mode((500, 500)) # Setter skjermen til 500x500 piksl
 
 clock = pygame.time.Clock()
 
-spiller1 = Spiller1(screen.get_width()/2, screen.get_height()/2, 2, 2)
-spiller2 = Spiller2(screen.get_width()/2, screen.get_height()/2, 2, 2)
+spiller1 = Spiller1(screen.get_width()/3, screen.get_height()-30, 2, 2)
+spiller2 = Spiller2(screen.get_width()/2, screen.get_height()-30, 2, 2)
 
 plattform = Plattform(screen.get_width()/screen.get_width(), screen.get_height()-3)
 
