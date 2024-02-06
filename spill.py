@@ -56,8 +56,9 @@ class Spiller1(Spillobjekt):
         self.hopp_tid = 0
     
     def tegn(self):
-        pygame.draw.rect(screen, self.color, self.rect)
         self.rect = pygame.Rect((self.x - self.size, self.y - self.size), (self.size * 3, self.size * 3))
+        self.heading = pygame.Rect((self.x - self.size + self.vx, self.y -self.size + 3*self.vy), (self.size * 3, self.size * 3))
+        pygame.draw.rect(screen, self.color, self.rect)
 
     def oppdater(self):
         print(self.vy)
@@ -71,9 +72,8 @@ class Spiller1(Spillobjekt):
         spiller1.y += spiller1.vy
         spiller1.vy += spiller1.a
 
-        # Kollisjon med platform
-
-        if pygame.Rect.colliderect(spiller1.rect, plattform.rect):
+        # Kollisjon med plattform
+        if pygame.Rect.colliderect(spiller1.heading, plattform.rect):
             #print("-----")
             if spiller1.vy > 0:
                 spiller1.vy = 0
@@ -82,13 +82,18 @@ class Spiller1(Spillobjekt):
                 self.vy -= 2
         
         # Kollisjon med blokk
-        if pygame.Rect.colliderect(spiller1.rect, blokk.rect):
-            #print("-----")
-            if spiller1.vy > 0:
-                spiller1.vy = 0
-            if keys[pygame.K_w] and abs(time.time() - self.hopp_tid) > 0.1:
-                self.hopp_tid = time.time()
-                self.vy -= 2
+        for x in blokker:
+            if pygame.Rect.colliderect(spiller1.heading, x.rect):
+                #print("-----")
+                if spiller1.vy > 0:
+                    spiller1.vy = 0
+                
+                if spiller1.vy < 0:
+                    spiller1.vy *= -1
+
+                if keys[pygame.K_w] and abs(time.time() - self.hopp_tid) > 0.1:
+                    self.hopp_tid = time.time()
+                    self.vy -= 2
         
 
 
@@ -104,8 +109,10 @@ class Spiller2(Spillobjekt):
         self.hopp_tid = 0
     
     def tegn(self):
-        pygame.draw.rect(screen, self.color, self.rect)
         self.rect = pygame.Rect((self.x - self.size, self.y - self.size), (self.size * 3, self.size * 3))
+        self.heading = pygame.Rect((self.x - self.size + self.vx, self.y -self.size + 3*self.vy), (self.size * 3, self.size * 3))
+        #pygame.draw.rect(screen, "green", self.heading)
+        pygame.draw.rect(screen, self.color, self.rect)
 
     def oppdater(self):
         keys = pygame.key.get_pressed() 
@@ -118,8 +125,8 @@ class Spiller2(Spillobjekt):
         spiller2.vy += spiller2.a
 
         # Kollisjon med plattform
-        if pygame.Rect.colliderect(spiller2.rect, plattform.rect):
-            print("-----")
+        if pygame.Rect.colliderect(spiller2.heading, plattform.rect):
+            #print("-----")
             if spiller2.vy > 0:
                 spiller2.vy = 0
             if keys[pygame.K_UP] and abs(time.time() - self.hopp_tid) > 0.1:
@@ -127,18 +134,19 @@ class Spiller2(Spillobjekt):
                 self.vy -= 2
 
         # Kollisjon med blokk
-        if pygame.Rect.colliderect(spiller2.rect, blokk.rect):
-            print("-----")
-            if spiller2.vy > 0:
-                spiller2.vy = 0
-            if spiller2.vy < 0:
-             spiller2.vy *= -1
-                                      
-            if keys[pygame.K_UP] and abs(time.time() - self.hopp_tid) > 0.1:
-                self.hopp_tid = time.time()
-                self.vy -= 2
-            
-                
+        for x in blokker:
+            if pygame.Rect.colliderect(spiller2.heading, x.rect):
+                print("-----")
+                if spiller2.vy > 0:
+                    spiller2.vy = 0
+
+                if spiller2.vy < 0:
+                    spiller2.vy *= -1
+                                        
+                if keys[pygame.K_UP] and abs(time.time() - self.hopp_tid) > 0.1:
+                    self.hopp_tid = time.time()
+                    self.vy -= 2
+          
 
 screen = pygame.display.set_mode((500, 500)) # Setter skjermen til 500x500 piksler.
 
@@ -162,17 +170,11 @@ for n in range(3):
 running = True
 
 while running:
-    # Avslutter løkken
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
-    # Fyller skjermen med hvit farge
     screen.fill("white")
-
-    """
-    Her skal vi putte spillets logikk, som å tegne figurer og oppdatere posisjonen deres.
-    """
 
     spiller1.y += spiller1.vy
     spiller2.y += spiller2.vy
