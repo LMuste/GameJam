@@ -161,9 +161,11 @@ blokk = Blokk(rnd.randint(0, screen.get_width()), rnd.randint(round(80*screen.ge
 
 blokker = []
 
-for n in range(3):
-    start_x = rnd.randint(0, screen.get_width())
-    start_y = rnd.randint(round(80*screen.get_height()/100), round(90*screen.get_height()/100))
+for n in range(100):
+    #start_x = rnd.randint(0, screen.get_width())
+    #start_y = rnd.randint(round(80*screen.get_height()/100), round(90*screen.get_height()/100))
+    start_x = screen.get_width()/3
+    start_y = 500 - 50*n
     blokk = Blokk(start_x, start_y)
     blokker.append(blokk)
 
