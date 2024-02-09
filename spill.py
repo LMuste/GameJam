@@ -65,9 +65,9 @@ class Spiller1(Spillobjekt):
     def oppdater(self):
         print(self.vy)
         keys = pygame.key.get_pressed() 
-        if keys[pygame.K_a]:
+        if keys[pygame.K_a] and self.x > 0:
             self.vx = -5
-        elif keys[pygame.K_d]:
+        elif keys[pygame.K_d] and self.x < screen.get_width() -self.size:
             self.vx = 5
         else:
             self.vx = 0
@@ -124,9 +124,9 @@ class Spiller2(Spillobjekt):
 
     def oppdater(self):
         keys = pygame.key.get_pressed() 
-        if keys[pygame.K_LEFT]:
+        if keys[pygame.K_LEFT] and self.x > 0:
             self.vx = -5
-        elif keys[pygame.K_RIGHT]:
+        elif keys[pygame.K_RIGHT] and self.x < screen.get_width() - self.size:
             self.vx = 5
         else:
             self.vx = 0
