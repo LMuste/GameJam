@@ -57,52 +57,50 @@ class Spiller1(Spillobjekt):
     
     def tegn(self):
         self.rect = pygame.Rect((self.x - self.size, self.y - self.size), (self.size * 3, self.size * 3))
-        self.heading = pygame.Rect((self.x - self.size + self.vx, self.y -self.size + 3*self.vy), (self.size * 3, self.size * 3))
+        self.headingy = pygame.Rect((self.x - self.size, self.y -self.size + 3*self.vy), (self.size * 3, self.size * 3))
+        self.headingx = pygame.Rect((self.x - self.size + self.vx, self.y - self.size), (self.size * 3, self.size * 2))
         pygame.draw.rect(screen, self.color, self.rect)
 
     def oppdater(self):
         print(self.vy)
         keys = pygame.key.get_pressed() 
         if keys[pygame.K_a]:
-            self.x -= self.fart
-        if keys[pygame.K_d]:
-            self.x += self.fart
+            self.vx = -5
+        elif keys[pygame.K_d]:
+            self.vx = 5
+        else:
+            self.vx = 0
         
         spiller1.y += spiller1.vy
+        spiller1.x += spiller1.vx
         spiller1.vy += spiller1.a
-
         
-
         # Kollisjon med plattform
-        if pygame.Rect.colliderect(spiller1.heading, plattform.rect):
-            #print("-----")
+        if pygame.Rect.colliderect(spiller1.headingy, plattform.rect):
             if spiller1.vy > 0:
                 spiller1.vy = 0
             if keys[pygame.K_w] and abs(time.time() - self.hopp_tid) > 0.1:
                 self.hopp_tid = time.time()
                 self.vy -= 2
         
-        # Kollisjon med blokk
+        # Kollisjon med blokk i Y
         for x in blokker:
-            if pygame.Rect.colliderect(spiller1.heading, x.rect):
-                #print("-----")
+            if pygame.Rect.colliderect(spiller1.headingy, x.rect):
                 if spiller1.vy > 0:
                     spiller1.vy = 0
-                
                 if spiller1.vy < 0:
                     spiller1.vy *= -1
-
                 if keys[pygame.K_w] and abs(time.time() - self.hopp_tid) > 0.1:
                     self.hopp_tid = time.time()
                     self.vy -= 2
         
         # Kollisjon med blokk i X
         for x in blokker:
-            if pygame.Rect.colliderect(spiller1.heading, x.rect) and abs(time.time() - self.hopp_tid) > 0.5:
+            if pygame.Rect.colliderect(spiller1.headingx, x.rect) and abs(time.time() - self.hopp_tid) > 0.1:
                 if spiller1.vx > 0:     #mot høyre
-                    spiller1.x -= 20
+                    spiller1.x -= 10
                 if spiller1.vx < 0:     #mot venstre
-                    spiller1.x += 20
+                    spiller1.x += 10
 
 class Spiller2(Spillobjekt):
     def __init__(self, start_x, start_y, start_vx, start_vy):
@@ -117,8 +115,9 @@ class Spiller2(Spillobjekt):
     
     def tegn(self):
         self.rect = pygame.Rect((self.x - self.size, self.y - self.size), (self.size * 3, self.size * 3))
-        self.heading = pygame.Rect((self.x - self.size + self.vx, self.y -self.size + 3*self.vy), (self.size * 3, self.size * 3))
-        pygame.draw.rect(screen, "green", self.heading)
+        self.headingy = pygame.Rect((self.x - self.size, self.y -self.size + 3*self.vy), (self.size * 3, self.size * 3))
+        self.headingx = pygame.Rect((self.x - self.size + self.vx, self.y - self.size), (self.size * 3, self.size * 2))
+        #pygame.draw.rect(screen, "green", self.headingx)
         pygame.draw.rect(screen, self.color, self.rect)
 
     def oppdater(self):
@@ -134,8 +133,8 @@ class Spiller2(Spillobjekt):
         spiller2.x += spiller2.vx
         spiller2.vy += spiller2.a
 
-        # Kollisjon med plattform i Y
-        if pygame.Rect.colliderect(spiller2.heading, plattform.rect):
+        # Kollisjon med plattform
+        if pygame.Rect.colliderect(spiller2.headingy, plattform.rect):
             #print("-----")
             if spiller2.vy > 0:
                 spiller2.vy = 0
@@ -145,8 +144,8 @@ class Spiller2(Spillobjekt):
 
         # Kollisjon med blokk i Y
         for x in blokker:
-            if pygame.Rect.colliderect(spiller2.heading, x.rect):
-                print("-----")
+            if pygame.Rect.colliderect(spiller2.headingy, x.rect):
+                #print("-----")
                 if spiller2.vy > 0:
                     spiller2.vy = 0
 
@@ -159,11 +158,11 @@ class Spiller2(Spillobjekt):
 
         # Kollisjon med blokk i X
         for x in blokker:
-            if pygame.Rect.colliderect(spiller2.heading, x.rect) and abs(time.time() - self.hopp_tid) > 0.5:
+            if pygame.Rect.colliderect(spiller2.headingx, x.rect) and abs(time.time() - self.hopp_tid) > 0.1:
                 if spiller2.vx > 0:     #mot høyre
-                    spiller2.x -= 20
+                    spiller2.x -= 10
                 if spiller2.vx < 0:     #mot venstre
-                    spiller2.x += 20
+                    spiller2.x += 10
           
 
 screen = pygame.display.set_mode((500, 500)) # Setter skjermen til 500x500 piksler.
