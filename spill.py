@@ -20,7 +20,7 @@ class Plattform(Spillobjekt):
     def __init__(self, start_x, start_y):
         super().__init__(start_x, start_y)
         self.size = 5
-        self.color = "gray"
+        self.color = "SeaGreen"
         self.bredde = 50
         self.høyde = 100
         self.x = start_x
@@ -34,7 +34,7 @@ class Blokk(Spillobjekt):
     def __init__(self, start_x, start_y):
         super().__init__(start_x, start_y)
         self.size = 5
-        self.color = "gray"
+        self.color = "SeaGreen"
         self.bredde = 50
         self.høyde = 100
         self.x = start_x
