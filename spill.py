@@ -59,7 +59,8 @@ class Spiller1(Spillobjekt):
         self.rect = pygame.Rect((self.x - self.size, self.y - self.size), (self.size * 3, self.size * 3))
         self.headingy = pygame.Rect((self.x - self.size, self.y -self.size + 3*self.vy), (self.size * 3, self.size * 3))
         self.headingx = pygame.Rect((self.x - self.size + self.vx, self.y - self.size), (self.size * 3, self.size * 2))
-        pygame.draw.rect(screen, self.color, self.rect)
+        screen.blit(player1, (self.x - self.size, self.y - self.size))
+        #pygame.draw.rect(screen, self.color, self.rect)
 
     def oppdater(self):
         print(self.vy)
@@ -117,6 +118,7 @@ class Spiller2(Spillobjekt):
         self.rect = pygame.Rect((self.x - self.size, self.y - self.size), (self.size * 3, self.size * 3))
         self.headingy = pygame.Rect((self.x - self.size, self.y -self.size + 3*self.vy), (self.size * 3, self.size * 3))
         self.headingx = pygame.Rect((self.x - self.size + self.vx, self.y - self.size), (self.size * 3, self.size * 2))
+        "screen.blit(player2, (self.x - self.size, self.y - self.size))"
         #pygame.draw.rect(screen, "green", self.headingx)
         pygame.draw.rect(screen, self.color, self.rect)
 
@@ -188,12 +190,20 @@ for n in range(100):
 
 running = True
 
+# Bilder
+player1 = pygame.image.load("figur.png")
+play1_rect = player1.get_rect()
+"""player2 = pygame.image.load("figur2.png")
+play2_rect = player2.get_rect()
+"""
+bakgrunn = pygame.image.load("bakgrunn.png")
+
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
-    screen.fill("white")
+    screen.blit(bakgrunn, (0, 0))
 
     spiller1.y += spiller1.vy
     spiller2.y += spiller2.vy
