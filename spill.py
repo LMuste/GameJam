@@ -4,7 +4,7 @@ import time
 
 pygame.init()
 
-class Spillobjekt:
+class Spillobjekt:  #   init for spillobjekter med de vanlige 
     def __init__(self, start_x, start_y):
         self.x = start_x
         self.y = start_y
@@ -76,7 +76,7 @@ class Spiller1(Spillobjekt):
         spiller1.x += spiller1.vx
         spiller1.vy += spiller1.a
         
-        # Kollisjon med plattform
+#   kollisjon med plattformen
         if pygame.Rect.colliderect(spiller1.headingy, plattform.rect):
             if spiller1.vy > 0:
                 spiller1.vy = 0
@@ -85,7 +85,7 @@ class Spiller1(Spillobjekt):
                 self.vy -= 2
                 pygame.mixer.music.play()
         
-        # Kollisjon med blokk i Y
+#   kollisjon med blokk i Y-retning
         for x in blokker:
             if pygame.Rect.colliderect(spiller1.headingy, x.rect):
                 if spiller1.vy > 0:
@@ -97,15 +97,15 @@ class Spiller1(Spillobjekt):
                     self.vy -= 2
                     pygame.mixer.music.play()
         
-        # Kollisjon med blokk i X
+#   kollisjon med blokk i X-retning
         for x in blokker:
             if pygame.Rect.colliderect(spiller1.headingx, x.rect) and abs(time.time() - self.hopp_tid) > 0.1:
-                if spiller1.vx > 0:     #mot høyre
+                if spiller1.vx > 0: #   mot høyre
                     spiller1.x -= 10
-                if spiller1.vx < 0:     #mot venstre
+                if spiller1.vx < 0: #   mot venstre
                     spiller1.x += 10
 
-class Spiller2(Spillobjekt):
+class Spiller2(Spillobjekt):    #   samme kommentarer gjelder for spiller 2
     def __init__(self, start_x, start_y, start_vx, start_vy):
         super().__init__(start_x, start_y)
         self.fart = 5
@@ -121,8 +121,6 @@ class Spiller2(Spillobjekt):
         self.headingy = pygame.Rect((self.x - self.size, self.y -self.size + 3*self.vy), (self.size * 3, self.size * 3))
         self.headingx = pygame.Rect((self.x - self.size + self.vx, self.y - self.size), (self.size * 3, self.size * 2))
         screen.blit(player2, (self.x - self.size, self.y - self.size))
-        #pygame.draw.rect(screen, "green", self.headingx)
-        #pygame.draw.rect(screen, self.color, self.rect)
 
     def oppdater(self):
         keys = pygame.key.get_pressed() 
@@ -137,22 +135,18 @@ class Spiller2(Spillobjekt):
         spiller2.x += spiller2.vx
         spiller2.vy += spiller2.a
 
-        # Kollisjon med plattform
+#   kollisjon med plattformen
         if pygame.Rect.colliderect(spiller2.headingy, plattform.rect):
-            #print("-----")
-            score2 = 0
             if spiller2.vy > 0:
                 spiller2.vy = 0
-                score2 += 1
             if keys[pygame.K_UP] and abs(time.time() - self.hopp_tid) > 0.1:
                 self.hopp_tid = time.time()
                 self.vy -= 2
                 pygame.mixer.music.play()
 
-        # Kollisjon med blokk i Y
+#   kollisjon med blokk i Y-retning
         for x in blokker:
             if pygame.Rect.colliderect(spiller2.headingy, x.rect):
-                #print("-----")
                 if spiller2.vy > 0:
                     spiller2.vy = 0
 
@@ -164,7 +158,7 @@ class Spiller2(Spillobjekt):
                     self.vy -= 2
                     pygame.mixer.music.play()
 
-        # Kollisjon med blokk i X
+#   kollisjon med blokk i X-retning
         for x in blokker:
             if pygame.Rect.colliderect(spiller2.headingx, x.rect) and abs(time.time() - self.hopp_tid) > 0.1:
                 if spiller2.vx > 0:     #mot høyre
@@ -172,11 +166,8 @@ class Spiller2(Spillobjekt):
                 if spiller2.vx < 0:     #mot venstre
                     spiller2.x += 10
           
-
-screen = pygame.display.set_mode((500, 500)) # Setter skjermen til 500x500 piksler.
-
-clock = pygame.time.Clock()
-
+screen = pygame.display.set_mode((500, 500))    #   skjerm til 500x500 pix
+clock = pygame.time.Clock() #   intern klokke
 fonttekst = pygame.font.SysFont("Arial", int(screen.get_height()/10))
 
 spiller1 = Spiller1(screen.get_width()/3, screen.get_height()-30, 2, 2)
@@ -184,13 +175,9 @@ spiller2 = Spiller2(screen.get_width()/2, screen.get_height()-30, 2, 2)
 
 plattform = Plattform(screen.get_width()/screen.get_width(), screen.get_height()-3)
 
-#blokk = Blokk(rnd.randint(0, screen.get_width()), rnd.randint(round(80*screen.get_height()/100), round(90*screen.get_height()/100)))
-
 blokker = []
 
-for n in range(100):
-    #start_x = rnd.randint(0, screen.get_width())
-    #start_y = rnd.randint(round(80*screen.get_height()/100), round(90*screen.get_height()/100))
+for n in range(100):    #   generering av blokker i random posisjon
     start_x = rnd.randint(1, screen.get_width())
     start_y = 500 - 40*n
     blokk = Blokk(start_x, start_y)
@@ -198,7 +185,7 @@ for n in range(100):
 
 running = True
 
-# Bilder
+#   bilder
 player1 = pygame.image.load("figur1.png")
 play1_rect = player1.get_rect()
 player2 = pygame.image.load("figur2.png")
@@ -206,12 +193,12 @@ play2_rect = player2.get_rect()
 
 bakgrunn = pygame.image.load("bakgrunn.png")
 
-# Lyd
+#   lyd
 hoppe = pygame.mixer.music.load("hopping.mp3")
 
-# Font
-pygame.font.init() # Font (initialiserer teks, eller font)
-font = pygame.font.SysFont("Arial", int(screen.get_height()/25)) # Font (int: er størrelsen på teksten)
+#   font
+pygame.font.init()  #   font (initialiserer tekst, eller font)
+font = pygame.font.SysFont("Arial", int(screen.get_height()/25))    #   font (int: er størrelsen på teksten)
 
 topp_tid = time.time()
 tid = time.time()
@@ -223,7 +210,6 @@ while running:
     
     if (spiller1.y < screen.get_height()/6 or spiller2.y < screen.get_height()/6) and abs(time.time() - topp_tid) > 3:
         topp_tid = time.time()
-        print("-")
         for x in blokker:
             x.y += 250
             spiller1.y += 0.25
@@ -232,19 +218,15 @@ while running:
             spiller2.vy = 20
             plattform.y += 250
 
-    
-    #print((spiller2.x, spiller2.y))
-
     screen.blit(bakgrunn, (0, 0))
 
-     # Score
+    # score
     score = round(time.time() - tid)
     
-    # Score spiller 1
-    tekst1 = font.render(f"Tid: {score}", True, "black") # Inputen måtte være str
+    # score spiller 1
+    tekst1 = font.render(f"Tid: {score}", True, "black")    #   inputen måtte være str
     tekst1_rect = tekst1.get_rect(center=(screen.get_width()/2, screen.get_height() - 470))
-    screen.blit(tekst1, tekst1_rect) # Tegner teksten
-
+    screen.blit(tekst1, tekst1_rect)    #   tegner teksten
 
     spiller1.y += spiller1.vy
     spiller2.y += spiller2.vy
@@ -260,30 +242,22 @@ while running:
     for x in blokker:
         x.tegn()
 
-    if spiller1.y > screen.get_height():
-        screen.fill("PowderBlue")   
-        tekst = fonttekst.render("Spiller 2 vinner", True, "SeaGreen") 
-        tekst_rect = tekst.get_rect(center = (screen.get_width()/2, screen.get_height()/3))
-        #tekstscore1 = fonttekst.render(score1)
-        screen.blit(tekst, tekst_rect)
-        running = False
+    if spiller1.y > screen.get_height():    #   avslutter dersom spiller 1 er nedenfor skjermen
+        screen.fill("PowderBlue")           #   farge på skjermen
+        tekst = fonttekst.render("Spiller 2 vinner", True, "SeaGreen")  #   tekst på skjermen
+        tekst_rect = tekst.get_rect(center = (screen.get_width()/2, screen.get_height()/3)) #   plassering av tekst
+        screen.blit(tekst, tekst_rect)  #   sender ut på skjermen
+        running = False #   ut av loop
     
-    if spiller2.y > screen.get_height():
+    if spiller2.y > screen.get_height():    #   samme gjelder for spiller 2
         screen.fill("PowderBlue")   
         tekst2 = fonttekst.render("Spiller 1 vinner", True, "SeaGreen") 
-        tekstscore2 = fonttekst.render(score2, True, "SeaGreen")
         tekst_rect = tekst2.get_rect(center = (screen.get_width()/2, screen.get_height()/3))
-        tekstscore2_rect = fonttekst.render(score2, True, "SeaGreen")
         screen.blit(tekst, tekst_rect)
-        running = False
+        running = False 
 
-    
-    # Oppdaterer hele skjermen
-    pygame.display.flip()
+    pygame.display.flip()   #   oppdaterer skjermen
+    clock.tick(60)  #   spillet kjører i 60 FPS
 
-    # Forsikrer at spillet kjører i maksimalt 60 FPS.
-    clock.tick(60)
-
-time.sleep(3)
-# Avslutter spillet
-pygame.quit()
+time.sleep(3)   #   venter 3 sekunder før spillet slukner
+pygame.quit()   #   avslutter
