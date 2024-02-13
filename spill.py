@@ -215,7 +215,7 @@ while running:
         for x in blokker:
             x.y += 100
             spiller1.y += 0.1
-            spiller1.vy = 20
+            spiller1.vy = 2
             spiller2.y += 0.1
             spiller2.vy = 20
             plattform.y += 100
