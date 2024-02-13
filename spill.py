@@ -206,10 +206,25 @@ font = pygame.font.SysFont("Arial", int(screen.get_height()/28)) # Font (int: er
 score1 = 0
 score2 = 0
 
+topp_tid = time.time()
+
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+    
+    if (spiller1.y < screen.get_height()/6 or spiller2.y < screen.get_height()/6) and abs(time.time() - topp_tid) > 3:
+        topp_tid = time.time()
+        print("-")
+        for x in blokker:
+            x.y += 100
+            spiller1.y += 0.1
+            spiller1.vy = 20
+            spiller2.y += 0.1
+            spiller2.vy = 20
+            plattform.y += 100
+
+    #print((spiller2.x, spiller2.y))
 
     screen.blit(bakgrunn, (0, 0))
 
