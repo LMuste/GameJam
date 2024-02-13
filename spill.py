@@ -171,6 +171,8 @@ screen = pygame.display.set_mode((500, 500)) # Setter skjermen til 500x500 piksl
 
 clock = pygame.time.Clock()
 
+fonttekst = pygame.font.SysFont("Arial", int(screen.get_height()/10))
+
 spiller1 = Spiller1(screen.get_width()/3, screen.get_height()-30, 2, 2)
 spiller2 = Spiller2(screen.get_width()/2, screen.get_height()-30, 2, 2)
 
@@ -214,13 +216,14 @@ while running:
         topp_tid = time.time()
         print("-")
         for x in blokker:
-            x.y += 100
-            spiller1.y += 0.1
-            spiller1.vy = 2
-            spiller2.y += 0.1
+            x.y += 250
+            spiller1.y += 0.25
+            spiller1.vy = 20
+            spiller2.y += 0.25
             spiller2.vy = 20
-            plattform.y += 100
+            plattform.y += 250
 
+    
     #print((spiller2.x, spiller2.y))
 
     screen.blit(bakgrunn, (0, 0))
@@ -251,11 +254,29 @@ while running:
     for x in blokker:
         x.tegn()
 
+    if spiller1.y > screen.get_height():
+        screen.fill("PowderBlue")   
+        tekst = fonttekst.render("Spiller 2 vinner", True, "SeaGreen") 
+        tekst_rect = tekst.get_rect(center = (screen.get_width()/2, screen.get_height()/3))
+        #tekstscore1 = fonttekst.render(score1)
+        screen.blit(tekst, tekst_rect)
+        running = False
+    
+    if spiller2.y > screen.get_height():
+        screen.fill("PowderBlue")   
+        tekst = fonttekst.render("Spiller 1 vinner", True, "SeaGreen") 
+        tekst_rect = tekst.get_rect(center = (screen.get_width()/2, screen.get_height()/3))
+        #tekstscore2 = fonttekst.render(score2)
+        screen.blit(tekst, tekst_rect)
+        running = False
+
+    
     # Oppdaterer hele skjermen
     pygame.display.flip()
 
     # Forsikrer at spillet kjører i maksimalt 60 FPS.
     clock.tick(60)
 
+time.sleep(3)
 # Avslutter spillet
 pygame.quit()
