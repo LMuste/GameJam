@@ -138,8 +138,10 @@ class Spiller2(Spillobjekt):
         # Kollisjon med plattform
         if pygame.Rect.colliderect(spiller2.headingy, plattform.rect):
             #print("-----")
+            score2 = 0
             if spiller2.vy > 0:
                 spiller2.vy = 0
+                score2 += 1
             if keys[pygame.K_UP] and abs(time.time() - self.hopp_tid) > 0.1:
                 self.hopp_tid = time.time()
                 self.vy -= 2
@@ -264,9 +266,10 @@ while running:
     
     if spiller2.y > screen.get_height():
         screen.fill("PowderBlue")   
-        tekst = fonttekst.render("Spiller 1 vinner", True, "SeaGreen") 
-        tekst_rect = tekst.get_rect(center = (screen.get_width()/2, screen.get_height()/3))
-        #tekstscore2 = fonttekst.render(score2)
+        tekst2 = fonttekst.render("Spiller 1 vinner", True, "SeaGreen") 
+        tekstscore2 = fonttekst.render(score2, True, "SeaGreen")
+        tekst_rect = tekst2.get_rect(center = (screen.get_width()/2, screen.get_height()/3))
+        tekstscore2_rect = fonttekst.render(score2, True, "SeaGreen")
         screen.blit(tekst, tekst_rect)
         running = False
 
