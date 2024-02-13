@@ -83,6 +83,7 @@ class Spiller1(Spillobjekt):
             if keys[pygame.K_w] and abs(time.time() - self.hopp_tid) > 0.1:
                 self.hopp_tid = time.time()
                 self.vy -= 2
+                pygame.mixer.music.play()
         
         # Kollisjon med blokk i Y
         for x in blokker:
@@ -94,6 +95,7 @@ class Spiller1(Spillobjekt):
                 if keys[pygame.K_w] and abs(time.time() - self.hopp_tid) > 0.1:
                     self.hopp_tid = time.time()
                     self.vy -= 2
+                    pygame.mixer.music.play()
         
         # Kollisjon med blokk i X
         for x in blokker:
@@ -145,6 +147,7 @@ class Spiller2(Spillobjekt):
             if keys[pygame.K_UP] and abs(time.time() - self.hopp_tid) > 0.1:
                 self.hopp_tid = time.time()
                 self.vy -= 2
+                pygame.mixer.music.play()
 
         # Kollisjon med blokk i Y
         for x in blokker:
@@ -159,6 +162,7 @@ class Spiller2(Spillobjekt):
                 if keys[pygame.K_UP] and abs(time.time() - self.hopp_tid) > 0.1:
                     self.hopp_tid = time.time()
                     self.vy -= 2
+                    pygame.mixer.music.play()
 
         # Kollisjon med blokk i X
         for x in blokker:
@@ -202,9 +206,12 @@ play2_rect = player2.get_rect()
 
 bakgrunn = pygame.image.load("bakgrunn.png")
 
+# Lyd
+hoppe = pygame.mixer.music.load("hopping.mp3")
+
 # Font
 pygame.font.init() # Font (initialiserer teks, eller font)
-font = pygame.font.SysFont("Arial", int(screen.get_height()/28)) # Font (int: er størrelsen på teksten)
+font = pygame.font.SysFont("Arial", int(screen.get_height()/25)) # Font (int: er størrelsen på teksten)
 
 topp_tid = time.time()
 tid = time.time()
@@ -231,16 +238,13 @@ while running:
     screen.blit(bakgrunn, (0, 0))
 
      # Score
-    score1 = round(time.time() - tid)
-    score2 = round(time.time() - tid)
+    score = round(time.time() - tid)
+    
     # Score spiller 1
-    tekst1 = font.render(f"Score1: {score1}", True, "black") # Inputen måtte være str
-    tekst1_rect = tekst1.get_rect(center=(screen.get_width() - 470, screen.get_height() - 470))
+    tekst1 = font.render(f"Tid: {score}", True, "black") # Inputen måtte være str
+    tekst1_rect = tekst1.get_rect(center=(screen.get_width()/2, screen.get_height() - 470))
     screen.blit(tekst1, tekst1_rect) # Tegner teksten
-    # Score Spiller 2
-    tekst2 = font.render(f"Score2: {score2}", True, "black") # Inputen måtte være str
-    tekst2_rect = tekst2.get_rect(center=(screen.get_width() - 50, screen.get_height() - 470))
-    screen.blit(tekst2, tekst2_rect) # Tegner teksten
+
 
     spiller1.y += spiller1.vy
     spiller2.y += spiller2.vy
