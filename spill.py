@@ -203,6 +203,7 @@ pygame.font.init() # Font (initialiserer teks, eller font)
 font = pygame.font.SysFont("Arial", int(screen.get_height()/28)) # Font (int: er størrelsen på teksten)
 
 topp_tid = time.time()
+tid = time.time()
 
 while running:
     for event in pygame.event.get():
@@ -225,8 +226,8 @@ while running:
     screen.blit(bakgrunn, (0, 0))
 
      # Score
-    score1 = round(time.time() - topp_tid)
-    score2 = round(time.time() - topp_tid)
+    score1 = round(time.time() - tid)
+    score2 = round(time.time() - tid)
     # Score spiller 1
     tekst1 = font.render(f"Score1: {score1}", True, "black") # Inputen måtte være str
     tekst1_rect = tekst1.get_rect(center=(screen.get_width() - 470, screen.get_height() - 470))
