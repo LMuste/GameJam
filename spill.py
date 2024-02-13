@@ -118,9 +118,9 @@ class Spiller2(Spillobjekt):
         self.rect = pygame.Rect((self.x - self.size, self.y - self.size), (self.size * 3, self.size * 3))
         self.headingy = pygame.Rect((self.x - self.size, self.y -self.size + 3*self.vy), (self.size * 3, self.size * 3))
         self.headingx = pygame.Rect((self.x - self.size + self.vx, self.y - self.size), (self.size * 3, self.size * 2))
-        "screen.blit(player2, (self.x - self.size, self.y - self.size))"
+        screen.blit(player2, (self.x - self.size, self.y - self.size))
         #pygame.draw.rect(screen, "green", self.headingx)
-        pygame.draw.rect(screen, self.color, self.rect)
+        #pygame.draw.rect(screen, self.color, self.rect)
 
     def oppdater(self):
         keys = pygame.key.get_pressed() 
@@ -191,20 +191,16 @@ for n in range(100):
 running = True
 
 # Bilder
-player1 = pygame.image.load("figur.png")
+player1 = pygame.image.load("figur1.png")
 play1_rect = player1.get_rect()
-"""player2 = pygame.image.load("figur2.png")
+player2 = pygame.image.load("figur2.png")
 play2_rect = player2.get_rect()
-"""
+
 bakgrunn = pygame.image.load("bakgrunn.png")
 
 # Font
 pygame.font.init() # Font (initialiserer teks, eller font)
 font = pygame.font.SysFont("Arial", int(screen.get_height()/28)) # Font (int: er størrelsen på teksten)
-
-# Score spiller 1 og 2
-score1 = 0
-score2 = 0
 
 topp_tid = time.time()
 
@@ -228,12 +224,15 @@ while running:
 
     screen.blit(bakgrunn, (0, 0))
 
+     # Score
+    score1 = round(time.time() - topp_tid)
+    score2 = round(time.time() - topp_tid)
     # Score spiller 1
-    tekst1 = font.render(f"Score:", True, "black") # Inputen måtte være str
+    tekst1 = font.render(f"Score1: {score1}", True, "black") # Inputen måtte være str
     tekst1_rect = tekst1.get_rect(center=(screen.get_width() - 470, screen.get_height() - 470))
     screen.blit(tekst1, tekst1_rect) # Tegner teksten
     # Score Spiller 2
-    tekst2 = font.render(f"Score:", True, "black") # Inputen måtte være str
+    tekst2 = font.render(f"Score2: {score2}", True, "black") # Inputen måtte være str
     tekst2_rect = tekst2.get_rect(center=(screen.get_width() - 50, screen.get_height() - 470))
     screen.blit(tekst2, tekst2_rect) # Tegner teksten
 
